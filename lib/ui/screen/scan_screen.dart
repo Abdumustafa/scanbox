@@ -16,7 +16,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
   @override
   void initState() {
     super.initState();
-    checkCameraPermission(); 
+    checkCameraPermission();
   }
 
   Future<void> checkCameraPermission() async {
@@ -63,8 +63,29 @@ class _ScannerScreenState extends State<ScannerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ScanBox'),
-        backgroundColor: Colors.transparent,
+        leading: Icon(
+          Icons.arrow_back_ios,
+          color: Colors.white,
+        ),
+        backgroundColor: Color(0xff3b0356),
+        title: const Text.rich(
+          TextSpan(
+            text: 'Scan',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            children: [
+              TextSpan(
+                  text: 'B',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w900, color: Color(0xfff4a8b6))),
+              TextSpan(
+                text: 'ox',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+        centerTitle: true,
         elevation: 0,
         actions: [
           IconButton(
@@ -73,7 +94,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
               builder: (context, state, child) {
                 return Icon(
                   state ? Icons.flash_on : Icons.flash_off,
-                  color: state ? Colors.amber : Colors.white,
+                  color: state
+                      ? Colors.amber
+                      : const Color.fromARGB(255, 238, 235, 235),
                   size: 30,
                 );
               },
@@ -104,7 +127,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
                 final List<Barcode> barcodes = capture.barcodes;
                 for (final barcode in barcodes) {
                   if (barcode.rawValue != null && !hasScanned) {
-                    hasScanned = true; 
+                    hasScanned = true;
                     cameraController.stop();
 
                     context.go('/result', extra: barcode.rawValue!);
